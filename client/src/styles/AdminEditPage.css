@@ -1,0 +1,40 @@
+.edit-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+  }
+  
+  .edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 300px;
+    width: 100%;
+    padding: 20px 20px 40px 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+
+  .edit-form input,
+  .edit-form button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid grey;
+    border-radius: 7px;
+    
+  }
+  
+  .edit-form button {
+    background-color: rgb(156, 159, 160);
+    color: black;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .edit-form button:hover {
+    background-color: gray;
+  }

@@ -1,0 +1,13 @@
+.dashboard-options{
+    display:flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    gap:7px;
+    width:90px;
+    padding-left:52px;
+   
+}
+.admin-dashboard h2{
+    text-align: center;
+
+}

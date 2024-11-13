@@ -1,0 +1,40 @@
+.homepage {
+  text-align: center;
+  padding: 2rem;
+}
+
+header h1 {
+  font-size: 1.5rem;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 17px;
+}
+
+.feature {
+  width: 200px;
+  height: 250px;
+  padding: 14px 16px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+.feature button {
+  margin-top: 7px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-color: #a6e4e7;
+  border-radius: 4px;
+  
+}
+
+.feature button:hover{
+    background-color: rgb(225, 227, 228);
+}
+
+.dashboard-image {
+  width: 100%;
+  border-bottom: 20px solid #a6e4e7;
+}

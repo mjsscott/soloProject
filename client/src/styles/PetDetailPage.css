@@ -1,0 +1,92 @@
+.pet-details {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.pet-details-info {
+  border: 0px;
+  border-radius: 6px;
+  margin: 20px 20px 20px 20px;
+  padding: 10px 30px 10px 30px;
+  background-color: #f0efeb;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pet-details-image {
+  width: 350px;
+  height: 250px;
+  border-radius: 15px;
+  margin-top: 70px;
+  margin-left: 10px;
+}
+.img-and-contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#name {
+  border-bottom: 2px solid #93928f;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.edit-button,
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: black;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  color: #1b7fb8;
+}
+
+.text {
+  font-size: small;
+}
+
+.bold {
+  font-size: 17px;
+}
+.p1,
+.p2,
+.p3 {
+  line-height: 9px;
+}
+
+.p3 {
+  padding-bottom: 30px;
+}
+.favorite-button {
+  width: 160px;
+  height: 50px;
+  border-radius: 8px;
+  border-color: #a6e4e7;
+  font-size: 15.5px;
+}
+
+.favorite-button:hover {
+  background-color: rgb(225, 227, 228);
+}
+
+a {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

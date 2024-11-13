@@ -1,0 +1,31 @@
+.pet-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; 
+  justify-content: center;
+}
+
+.pet-list > div {
+  flex: 1 1 45%; /* Adjusts each card to 45% of the container width */
+  max-width: 45%; /* Ensures cards stay within 2 per row */
+  box-sizing: border-box;
+}
+
+.Adminpet-list-page button {
+  margin-top: 7px;
+  margin-bottom: 10px;
+  width: 70px;
+  margin-left: 52px;
+}
+
+.add-pet-form{
+    display:flex;
+    flex-direction: column;
+    gap:7px;
+    width:180px;
+    margin-left: 52px;
+}
+
+.add-pet-form button{
+    margin-left: 52px;
+}

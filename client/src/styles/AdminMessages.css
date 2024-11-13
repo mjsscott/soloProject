@@ -1,0 +1,38 @@
+.admin-messages {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .messages-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .message-item {
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-left: 4px solid #a6e4e7;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .message-item p {
+    margin: 8px 0;
+  }
+  
+  .message-item strong {
+    color: #06858c;
+  }

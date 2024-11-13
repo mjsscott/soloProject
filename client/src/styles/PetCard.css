@@ -1,0 +1,40 @@
+.pet-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  height: 256px;
+  margin: 1rem;
+  margin-left: 65px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.pet-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pet-image {
+  width: 300px;
+  height: 210px;
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+.pet-info h3 {
+  margin: 0.5rem 0;
+  padding-left: 0px;
+}
+
+.pet-image img {
+  width: 100%; /* Makes image fill the container width */
+  height: 100%; /* Ensures the image fills the height */
+  object-fit: cover; /* Crops image to maintain aspect ratio */
+  border-radius: 8px;
+}
