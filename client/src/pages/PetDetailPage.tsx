@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,10 +8,13 @@ import { FaPhone, FaEdit, FaHeart } from "react-icons/fa";
 import { BiSolidHomeHeart } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdEmail, MdDelete } from "react-icons/md";
+import React from 'react';
+import { Pet } from "../../types/Pet.js";
 
-const PetDetailPage = () => {
+
+const PetDetailPage: React.FC = () => {
   const { id } = useParams();
-  const [pet, setPet] = useState(null);
+  const [pet, setPet] = useState<Pet | null>(null);
   const [cityName, setCityName] = useState(""); // State to store the city name
   const [isFavorite, setIsFavorite] = useState(false); // State to manage favorite status
   const navigate = useNavigate();
@@ -20,14 +24,17 @@ const PetDetailPage = () => {
   // Fetch pet details and reverse geocode city name on component mount
   useEffect(() => {
     const fetchPet = async () => {
+      const base_url = 'http://localhost:3000';
       try {
-        const response = await axios.get(`http://localhost:3000/pets/${id}`);
-        setPet(response.data);
+      // todo adjust .env file, moving to root and move all urls into it.
+        const response = await axios.get(`${base_url}/pets/${id}`);
+        const fetchedPet: Pet = response.data;
+        setPet(fetchedPet);
 
-        // Check if location coordinates are available
-        const { lat, lng } = response.data.location;
+        const { lat, lng } = fetchedPet.location;
         if (lat && lng) {
           const geocodeResponse = await axios.get(
+            // todo same here
             "https://nominatim.openstreetmap.org/reverse",
             {
               params: {
@@ -44,13 +51,13 @@ const PetDetailPage = () => {
 
         // Fetch user's favorite pets to check if this pet is a favorite
         const favoritesResponse = await axios.get(
-          `http://localhost:3000/favorite`,
+          `${base_url}/favorite`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         setIsFavorite(
-          favoritesResponse.data.some((favPet) => favPet._id === id)
+          favoritesResponse.data.some((favPet: Pet) => favPet._id === id)
         );
       } catch (error) {
         console.error("Error fetching pet details:", error);
@@ -77,7 +84,6 @@ const PetDetailPage = () => {
 
   // Loading message while data is being fetched
   if (!pet) return <p>Loading...</p>;
-
   // Handler for deleting a pet
   const handleDelete = async () => {
     console.log("Deleting pet with id:", id); // Log the id for debugging
@@ -112,7 +118,7 @@ const PetDetailPage = () => {
         )}
 
         {/* Pet details */}
-        <h2 id="name">{pet.name}</h2>
+        <h2 data-testid='name' id="name">{pet.name}</h2>
         <p>Age: {pet.age}</p>
         <p>Gender: {pet.gender}</p>
 

@@ -7,8 +7,8 @@ breed: string;
 age: number;
 gender: string;
 location: {
-    Lat: number;
-    Lng: number;
+    lat: number;
+    lng: number;
 
 };
 city: string;
@@ -19,6 +19,4 @@ shelterName: string;
 phone: string;
 email: string;
   }
-export interface PetCardProps {
-    pet: Pet;
-}
+

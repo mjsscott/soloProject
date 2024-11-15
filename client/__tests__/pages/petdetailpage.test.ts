@@ -1,6 +1,5 @@
-/* import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
 import axios from '../../node_modules/axios/index';
 import React from 'react';
 import { MemoryRouter } from '../../node_modules/react-router-dom/dist/index';
@@ -38,4 +37,3 @@ describe('PetDetailPage', () => {
     it('fetches and displays the details of the selected pet', async () => {
     });
 });
- */
