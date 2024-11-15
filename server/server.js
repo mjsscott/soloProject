@@ -1,211 +1,203 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const authRoutes = require("./routes/auth");
-const petRoutes = require("./routes/pets");
-const contactRoutes = require("./routes/contact");
-const dashboardRoutes = require("./routes/dashboard");
-const favoriteRoutes =require("./routes/favorite")
-const Pet = require("./models/Pet");
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const authRoutes = require('./routes/auth');
+const petRoutes = require('./routes/pets');
+const contactRoutes = require('./routes/contact');
+const dashboardRoutes = require('./routes/dashboard');
+const favoriteRoutes = require('./routes/favorite');
+const Pet = require('./models/Pet');
 
-
-   
-  const mockPets = [
+const mockPets = [
   {
-    name: "Buddy",
-    type: "Dog",
+    name: 'Buddy',
+    type: 'Dog',
     age: 3,
     location: { lat: 51.5074, lng: -0.1278 },
-    city: "London",
-    shelterName: "Together",
-     phone: "123456789",
-     email:"together@gmail.com",
-    image: "/images/buddy.jpg",
-    gender: "Male",
+    city: 'London',
+    shelterName: 'Together',
+    phone: '123456789',
+    email: 'together@gmail.com',
+    image: '/images/buddy.jpg',
+    gender: 'Male',
     favorite: false,
   },
   {
-    name: "Luci",
-    type: "cat",
+    name: 'Luci',
+    type: 'cat',
     age: 3,
     location: { lat: 51.5074, lng: -0.1278 },
-    city: "London",
-    shelterName: "Together",
-    phone: "123456789" ,
-    email:"together@gmail.com",
-    image: "/images/luci.jpg",
-    gender: "Female",
+    city: 'London',
+    shelterName: 'Together',
+    phone: '123456789',
+    email: 'together@gmail.com',
+    image: '/images/luci.jpg',
+    gender: 'Female',
     favorite: false,
   },
   {
-    name: "Tom",
-    type: "Cat",
+    name: 'Tom',
+    type: 'Cat',
     age: 1,
     location: { lat: 53.483959, lng: -2.244644 },
-    city: "Manchester",
-    shelterName: "Adoption Centre",
-     phone: "123456789",
-     email:"adopt@gmail.com" ,
-    image: "/images/tom.jpg",
-    gender: "Male",
+    city: 'Manchester',
+    shelterName: 'Adoption Centre',
+    phone: '123456789',
+    email: 'adopt@gmail.com',
+    image: '/images/tom.jpg',
+    gender: 'Male',
     favorite: false,
   },
   {
-    name: "Fluffy",
-    type: "Rabbit",
+    name: 'Fluffy',
+    type: 'Rabbit',
     age: 1,
     location: { lat: 55.9533, lng: -3.1883 },
-    city: "Edinburgh",
-    sshelterName:"Lives", 
-    phone: "123456789",
-    email:"lives@gmail.com" ,
-    image: "/images/fluffy.jpg",
-    gender: "Male",
+    city: 'Edinburgh',
+    sshelterName: 'Lives',
+    phone: '123456789',
+    email: 'lives@gmail.com',
+    image: '/images/fluffy.jpg',
+    gender: 'Male',
     favorite: false,
   },
   {
-    name: "Charlie",
-    type: "Dog",
+    name: 'Charlie',
+    type: 'Dog',
     age: 5,
     location: { lat: 52.4862, lng: -1.8904 },
-    city: "Birmingham",
-    shelterName: "Bham Pets",
-     phone: "123456789",
-     email:"bham@gemail.com" ,
-    image: "/images/charlie.jpg",
-    gender: "Male",
+    city: 'Birmingham',
+    shelterName: 'Bham Pets',
+    phone: '123456789',
+    email: 'bham@gemail.com',
+    image: '/images/charlie.jpg',
+    gender: 'Male',
     favorite: false,
   },
   {
-    name: "Bella",
-    type: "Cat",
+    name: 'Bella',
+    type: 'Cat',
     age: 2,
     location: { lat: 51.4545, lng: -2.5879 },
-    city: "Bristol",
-    shelterName: "Your Pet", 
-    phone: "123456789",
-    email:"your@gmail.com",
-    image: "/images/bella.jpg",
-    gender: "Female",
+    city: 'Bristol',
+    shelterName: 'Your Pet',
+    phone: '123456789',
+    email: 'your@gmail.com',
+    image: '/images/bella.jpg',
+    gender: 'Female',
     favorite: false,
   },
   {
-    name: "Violla",
-    type: "Dog",
+    name: 'Violla',
+    type: 'Dog',
     age: 4,
     location: { lat: 53.4084, lng: -2.9916 },
-    city: "Liverpool",
-   shelterName:"Together in Liverpool",
-     phone: "123456789",
-     email:"togetherliverpool@gmail.com",
-    image: "/images/violla.jpg",
-    gender: "Female",
+    city: 'Liverpool',
+    shelterName: 'Together in Liverpool',
+    phone: '123456789',
+    email: 'togetherliverpool@gmail.com',
+    image: '/images/violla.jpg',
+    gender: 'Female',
     favorite: false,
   },
   {
-    name: "Shadow",
-    type: "Cat",
+    name: 'Shadow',
+    type: 'Cat',
     age: 4,
     location: { lat: 51.752, lng: -1.2577 },
-    city: "Oxford",
-    shelterName: "Save Lives", 
-    phone: "123456789",
-    email:"save@gmail.com",
-    image: "/images/shadow.jpg",
-    gender: "Male",
+    city: 'Oxford',
+    shelterName: 'Save Lives',
+    phone: '123456789',
+    email: 'save@gmail.com',
+    image: '/images/shadow.jpg',
+    gender: 'Male',
     favorite: false,
   },
   {
-    name: "Snowball",
-    type: "Rabbit",
+    name: 'Snowball',
+    type: 'Rabbit',
     age: 2,
     location: { lat: 51.4543, lng: -0.9781 },
-    city: "Reading",
-    shelterName: "The Home", 
-    phone: "123456789",
-    email:"home@gmail.com",
-    image: "/images/snowball.jpg",
-    gender: "Female",
+    city: 'Reading',
+    shelterName: 'The Home',
+    phone: '123456789',
+    email: 'home@gmail.com',
+    image: '/images/snowball.jpg',
+    gender: 'Female',
     favorite: false,
   },
   {
-    name: "Rocky",
-    type: "Dog",
+    name: 'Rocky',
+    type: 'Dog',
     age: 5,
     location: { lat: 52.2053, lng: 0.1218 },
-    city: "Cambridge",
-    shelterName: "The Home Cambridge", 
-    phone: "123456789",
-    email:"homecambridge@gamil.com",
-    image: "/images/rocky.jpg",
-    gender: "Male",
+    city: 'Cambridge',
+    shelterName: 'The Home Cambridge',
+    phone: '123456789',
+    email: 'homecambridge@gamil.com',
+    image: '/images/rocky.jpg',
+    gender: 'Male',
     favorite: false,
   },
   {
-    name: "Ginger",
-    type: "Cat",
+    name: 'Ginger',
+    type: 'Cat',
     age: 3,
     location: { lat: 53.8008, lng: -1.5491 },
-    city: "Leeds",
-   shelterName:"Shelter", 
-    phone: "123456789",
-    email:"shelter@gamil.com",
-    image: "/images/ginger.jpg",
-    gender: "Female",
+    city: 'Leeds',
+    shelterName: 'Shelter',
+    phone: '123456789',
+    email: 'shelter@gamil.com',
+    image: '/images/ginger.jpg',
+    gender: 'Female',
     favorite: false,
   },
-];   
- 
+];
+
 //middleware
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-
-
- 
-/* 
+/*
   mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(async () => {
         await mongoose.connection.db.dropCollection('pets');
         console.log('Dropped pets collection');
         mongoose.connection.close();
     })
-    .catch(error => console.error('Error dropping collection:', error));     
+    .catch(error => console.error('Error dropping collection:', error));
  */
 
- 
 // MongoDB connection and mock data insertion
-   mongoose
+mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(async () => {
-    console.log("Connected to MongoDB");
+    console.log('Connected to MongoDB');
 
     // Insert mock data if the collection is empty
     const existingPets = await Pet.countDocuments();
     if (existingPets === 0) {
       await Pet.insertMany(mockPets);
-      console.log("Mock pets data inserted");
+      console.log('Mock pets data inserted');
     } else {
-      console.log("Pets collection already populated");
+      console.log('Pets collection already populated');
     }
   })
   .catch((error) => {
-    console.error("Error connecting to MongoDB:", error.message);
-  });    
-       
+    console.error('Error connecting to MongoDB:', error.message);
+  });
 
 //routes
-app.use("/auth", authRoutes);
-app.use("/pets", petRoutes);
-app.use("/contact", contactRoutes);
-app.use("/dashboard", dashboardRoutes);
-app.use("/favorite",favoriteRoutes)
-
+app.use('/auth', authRoutes);
+app.use('/pets', petRoutes);
+app.use('/contact', contactRoutes);
+app.use('/dashboard', dashboardRoutes);
+app.use('/favorite', favoriteRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
