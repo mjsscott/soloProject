@@ -25,24 +25,24 @@ const Navbar = () => {
             window.removeEventListener('storage', handleStorageChange);
         };
     }, []); */
- 
+
    /*  const handleLogin = () => {
         setIsLoggedIn(true);
     }; */
 
-   
+
 
 
     const handleLogout = () => {
         localStorage.removeItem('token'); // Remove the token on logout
         //setIsLoggedIn(false); // Update login state
-        
+
         navigate('/login'); // Redirect to login page
     };
 
     return (
         <nav className="navbar">
-            <h3>PetAdopt</h3>
+            <h3><Link to="/">PetAdopt</Link></h3>
             <div className="nav-links">
                 {isLoggedIn ? (
                     <button onClick={handleLogout}>Logout</button>

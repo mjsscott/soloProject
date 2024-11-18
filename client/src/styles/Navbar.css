@@ -30,10 +30,20 @@ font-size: 15px;
 
 .nav-links button:hover{
     color: #007bff;
-    
+
     }
 
 
 h3 {
     padding-left:45px;
+}
+h3 a {
+    color: #333;
+    text-decoration: none;
+
+}
+h3 a:hover{
+    color: #070707;
+    text-decoration: none;
+
 }
