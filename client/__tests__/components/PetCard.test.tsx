@@ -1,6 +1,5 @@
-import { render, renderHook, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import PetCard from '../../src/components/PetCard';
-import { PetCardProps } from '../../types/Components.js';
 import { MemoryRouter } from 'react-router-dom';
 
 const mockPet = {

@@ -10,10 +10,10 @@ import { FaLocationDot } from "react-icons/fa6";
 import { MdEmail, MdDelete } from "react-icons/md";
 import React from 'react';
 import { Pet } from "../../types/Pet.js";
+import { PetDetailPageProps } from "../../types/Components";
 
 
-
-const PetDetailPage: React.FC = () => {
+const PetDetailPage: React.FC<PetDetailPageProps> = () => {
   const { id } = useParams();
   const [pet, setPet] = useState<Pet | null>(null);
   const [cityName, setCityName] = useState(""); // State to store the city name
@@ -35,7 +35,7 @@ const PetDetailPage: React.FC = () => {
         const { lat, lng } = fetchedPet.location;
         if (lat && lng) {
           const geocodeResponse = await axios.get(
-            // todo same here
+
             "https://nominatim.openstreetmap.org/reverse",
             {
               params: {
@@ -119,23 +119,23 @@ const PetDetailPage: React.FC = () => {
         )}
 
         {/* Pet details */}
-        <h2 data-testid='name' id="name">{pet.name}</h2>
-        <p>Age: {pet.age}</p>
-        <p>Gender: {pet.gender}</p>
+        <h2 data-testid='petname' id="name">{pet.name}</h2>
+        <p data-testid='petage'>Age: {pet.age}</p>
+        <p data-testid='petgender'>Gender: {pet.gender}</p>
 
         <h4>Shelter Details</h4>
         {/* Display city name from reverse geocoding */}
         <p>
           <FaLocationDot style={{ color: "black", marginRight: "8px" }} />
-          {cityName}
+          <span data-testid='petcity'>{cityName}</span>
         </p>
         <p>
           <BiSolidHomeHeart style={{ color: "black", marginRight: "8px" }} />
-          {pet.shelterName}
+          <span data-testid='petshelter'>{pet.shelterName}</span>
         </p>
         <p>
           <FaPhone style={{ color: "black", marginRight: "8px" }} />
-          {pet.phone}
+          <span data-testid='petphone'>{pet.phone}</span>
         </p>
         <p>
           <MdEmail style={{ color: "black", marginRight: "8px" }} />

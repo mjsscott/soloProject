@@ -1,18 +1,18 @@
 export default {
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.tsx?$': [
+    '^.+\\.(ts|tsx)?$': [
       'ts-jest',
       {
-        tsconfig: './tsconfig.json', // Move tsconfig setting here
+        tsconfig: './tsconfig.json',
       },
     ],
+    '^.+\\.(js|jsx)$': 'babel-jest',
   },
 
   moduleNameMapper: {
     '\\.css$': 'identity-obj-proxy',
   },
-  transformIgnorePatterns: [
-    '/node_modules/(?!react-router-dom)/',
-  ],
+  preset: 'ts-jest',
+
 };

@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "ft": "jest --config jest.frontend.config.js",
+    "t": "jest --config jest.frontend.config.js",
+    "test": "jest --config jest.frontend.config.js",
     "test:watch": "jest --watch"
   },
   "dependencies": {

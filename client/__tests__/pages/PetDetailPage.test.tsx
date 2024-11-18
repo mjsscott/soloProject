@@ -1,22 +1,12 @@
-import { getByTestId, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { getByTestId, render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
-import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import PetDetailPage from '../../src/pages/PetDetailPage';  // Adjusted import
-import { useParams } from 'react-router-dom';
-import { PetDetailPageProps } from '../../types/Components';
 import { Pet } from '../../types/Pet';
 
 
-
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),  // Keep the actual module's functionality
-    useParams: jest.fn(),  // Mock `useParams` here
-}));
-jest.mock('axios', () => ({
-    get: jest.fn(), // Mock `axios.get` here
-}));
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 const mockPet: Pet = {
     _id: '1234',
@@ -38,8 +28,24 @@ const mockPet: Pet = {
 
 describe('PetDetailPage', () => {
     it('fetches and displays the details of the selected pet', async () => {
-        render(<PetDetailPage pet={mockPet} />);
-        expect(screen.getByTestId('name')).toEqual('Ginger');
+
+        mockedAxios.get.mockRejectedValue('Error fetching your pet details:');
+        mockedAxios.get.mockResolvedValue({ data: mockPet });
+        render(< MemoryRouter>
+            <PetDetailPage pet={mockPet} />
+        </MemoryRouter>);
+
+
+       await waitFor(()=>{
+
+           expect(screen.getByTestId('petname').textContent).toBe(mockPet.name);
+           expect(screen.getByTestId('petage').textContent).toBe(`Age: ${mockPet.age}`);
+           expect(screen.getByTestId('petphone').textContent).toBe(mockPet.phone);
+           expect(axios.get).toHaveBeenCalledTimes(1);
+
+
+       })
     });
 });
+
 
