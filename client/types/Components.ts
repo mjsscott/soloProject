@@ -5,3 +5,6 @@ export interface PetCardProps {
 export interface MapProps {
     pets: Pet[];
 }
+export interface PetDetailPageProps {
+    pet: Pet;
+}

@@ -1,5 +1,5 @@
 import '../styles/PetCard.css';
-import { Link } from '../../node_modules/react-router-dom/dist/index';
+import { Link } from 'react-router-dom';
 import { PetCardProps } from '../../types/Components';
 import React from 'react';
 const PetCard: React.FC<PetCardProps> = ({ pet }) => {
