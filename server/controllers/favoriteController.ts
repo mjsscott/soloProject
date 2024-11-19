@@ -1,11 +1,13 @@
-const Pet = require("../models/Pet");
+import { Response } from "express";
+import { FavoriteRequest } from "../@types/PetType";
+import petModel from "../models/pet-model";
 
 // Toggle favorite status of a pet
-exports.toggleFavoriteStatus = async (req, res) => {
+exports.toggleFavoriteStatus = async (req: FavoriteRequest, res: Response) => {
   const { id: petId } = req.params;
 
   try {
-    const pet = await Pet.findById(petId);
+    const pet = await petModel.findById(petId);
 
     if (!pet) return res.status(404).json({ error: "Pet not found" });
 
@@ -22,9 +24,9 @@ exports.toggleFavoriteStatus = async (req, res) => {
 };
 
 // Get user's favorite pets
-exports.getAllFavorites = async (req, res) => {
+exports.getAllFavorites = async (req: Request, res: Response) => {
   try {
-    const favoritePets = await Pet.find({ favorite: true });
+    const favoritePets = await petModel.find({ favorite: true });
     res.status(200).json(favoritePets);
   } catch (error) {
     console.error("Error fetching favorite pets:", error);

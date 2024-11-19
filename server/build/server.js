@@ -8,17 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const authRoutes = require('./build/routes/auth');
-const petRoutes = require('./routes/pets');
-const contactRoutes = require('./routes/contact');
-const dashboardRoutes = require('./routes/dashboard');
-const favoriteRoutes = require('./routes/favorite');
-const Pet = require('./models/Pet');
+const express_1 = __importDefault(require("express"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const cors_1 = __importDefault(require("cors"));
+const auth_1 = require("./routes/auth");
+const pets_1 = __importDefault(require("./routes/pets"));
+const contact_1 = __importDefault(require("./routes/contact"));
+const favorite_1 = __importDefault(require("./routes/favorite"));
+const pet_model_1 = __importDefault(require("./models/pet-model"));
+const dashboard_1 = __importDefault(require("./routes/dashboard"));
 const mockPets = [
     {
         name: 'Buddy',
@@ -165,9 +168,9 @@ const mockPets = [
     },
 ];
 //middleware
-const app = express();
-app.use(express.json());
-app.use(cors());
+const app = (0, express_1.default)();
+app.use(express_1.default.json());
+app.use((0, cors_1.default)());
 /*
   mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(async () => {
@@ -178,7 +181,7 @@ app.use(cors());
     .catch(error => console.error('Error dropping collection:', error));
  */
 // MongoDB connection and mock data insertion
-mongoose
+mongoose_1.default
     .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -186,9 +189,9 @@ mongoose
     .then(() => __awaiter(void 0, void 0, void 0, function* () {
     console.log('Connected to MongoDB');
     // Insert mock data if the collection is empty
-    const existingPets = yield Pet.countDocuments();
+    const existingPets = yield pet_model_1.default.countDocuments();
     if (existingPets === 0) {
-        yield Pet.insertMany(mockPets);
+        yield pet_model_1.default.insertMany(mockPets);
         console.log('Mock pets data inserted');
     }
     else {
@@ -199,10 +202,11 @@ mongoose
     console.error('Error connecting to MongoDB:', error.message);
 });
 //routes
-app.use('/auth', authRoutes);
-app.use('/pets', petRoutes);
-app.use('/contact', contactRoutes);
-app.use('/dashboard', dashboardRoutes);
-app.use('/favorite', favoriteRoutes);
+app.use('/login', auth_1.loginRouter);
+app.use('/register', auth_1.loginRouter);
+app.use('/pets', pets_1.default);
+app.use('/contact', contact_1.default);
+app.use('/dashboard', dashboard_1.default);
+app.use('/favorite', favorite_1.default);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
