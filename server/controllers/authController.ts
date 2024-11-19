@@ -12,6 +12,9 @@ const jwtSecret = process.env.JWT_SECRET;
 export const register = async (req: Request, res: Response) => {
     try {
         const { email, password, role } = req.body;
+        if (!email||!password||!role) {
+          throw new Error('email, password and role are expected fields');
+        }
         const user = new User({ email, password, role });
         await user.save();
         console.log('User object:', user);
