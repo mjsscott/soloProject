@@ -14,8 +14,11 @@ export const register = async (req: Request, res: Response) => {
         const { email, password, role } = req.body;
         const user = new User({ email, password, role });
         await user.save();
-        
-        res.status(201).json({ message: 'User registered successfully' });
+        console.log('User object:', user);
+        res.status(201).jsonp({ 
+            message: 'User registered successfully', 
+            user: { id: user._id, email: user.email, role: user.role}
+        });
     } catch (error) {
         const typedError = error as Error;
         res.status(400).json({ error: typedError.message });
