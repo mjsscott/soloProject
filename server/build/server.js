@@ -16,7 +16,7 @@ require('dotenv').config();
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
-const auth_1 = require("./routes/auth");
+const auth_1 = __importDefault(require("./routes/auth"));
 const pets_1 = __importDefault(require("./routes/pets"));
 const contact_1 = __importDefault(require("./routes/contact"));
 const favorite_1 = __importDefault(require("./routes/favorite"));
@@ -182,10 +182,7 @@ app.use((0, cors_1.default)());
  */
 // MongoDB connection and mock data insertion
 mongoose_1.default
-    .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+    .connect(process.env.MONGODB_URI)
     .then(() => __awaiter(void 0, void 0, void 0, function* () {
     console.log('Connected to MongoDB');
     // Insert mock data if the collection is empty
@@ -202,8 +199,7 @@ mongoose_1.default
     console.error('Error connecting to MongoDB:', error.message);
 });
 //routes
-app.use('/login', auth_1.loginRouter);
-app.use('/register', auth_1.loginRouter);
+app.use('/auth', auth_1.default);
 app.use('/pets', pets_1.default);
 app.use('/contact', contact_1.default);
 app.use('/dashboard', dashboard_1.default);

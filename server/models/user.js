@@ -1,12 +1,5 @@
-import mongoose, { Schema, Document} from "mongoose";
-import bcrypt from 'bcrypt';
-
-export interface IUser extends Document {
-  email: string;
-  password: string;
-  role: 'adopter' | 'shelter';
-  comparePassword: (candidatePassword: string) => Promise<boolean>;
-}
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
   {
@@ -24,9 +17,9 @@ const userSchema = new mongoose.Schema(
       enum: ["adopter", "shelter"],
       default: "adopter",
     },
+    
 
-
-
+  
   },
   {
     timestamps: true,
@@ -41,10 +34,8 @@ userSchema.pre("save", async function (next) {
 });
 
 // Method to compare password for login
-userSchema.methods.comparePassword = function (candidatePassword: string) {
+userSchema.methods.comparePassword = function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-const User = mongoose.model<IUser>('User', userSchema);
-
-export default User;
+module.exports = mongoose.model("User", userSchema);

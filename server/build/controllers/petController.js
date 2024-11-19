@@ -32,8 +32,11 @@ function getAllPets(req, res) {
 // Add a new pet (for shelters)
 function addPet(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
         try {
-            const newPet = new pet_model_1.default(Object.assign(Object.assign({}, req.body), { shelter: req.user.id }));
+            const thisShelter = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+            const newPet = new pet_model_1.default(Object.assign(Object.assign({}, req.body), { shelter: thisShelter // Assuming shelter is logged in
+             }));
             yield newPet.save();
             res.status(201).json(newPet);
         }

@@ -1,3 +1,5 @@
+import { IUser } from "../models/user";
+
 export interface PetType  {
 _id: string;
 name: string;
@@ -24,4 +26,5 @@ export interface FavoriteRequest extends Request {
   params: {
     id: string;  // The petId in this case, assuming it will be a string
   };
+  user?: IUser
 }

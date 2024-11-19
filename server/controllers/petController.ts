@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { PetType } from "../@types/PetType";
 
 // Get all pets
-export async function getAllPets (req: Request, res: Response): Promise<void | PetType[]> {
+export async function getAllPets (req: Request, res: Response): Promise<void> {
   try {
     const pets: PetType[] = await petModel.find();
     res.json(pets);
@@ -13,11 +13,12 @@ export async function getAllPets (req: Request, res: Response): Promise<void | P
 };
 
 // Add a new pet (for shelters)
-export async function addPet (req: Request, res: Response): Promise<void | PetType> {
+export async function addPet (req: Request, res: Response): Promise<void> {
   try {
+    const thisShelter = req.user?.id;
     const newPet = new petModel({
       ...req.body,
-      shelter: req.user.id, // Assuming shelter is logged in
+      shelter: thisShelter // Assuming shelter is logged in
     });
     await newPet.save();
     res.status(201).json(newPet);
@@ -27,7 +28,7 @@ export async function addPet (req: Request, res: Response): Promise<void | PetTy
 };
 
 //Get one Pet for details
-export async function getOnePet (req: Request, res: Response): Promise<PetType | void> {
+export async function getOnePet (req: Request, res: Response): Promise<void> {
   try {
     const pet: PetType = await petModel.findById(req.params.id);
     res.json(pet);

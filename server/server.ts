@@ -2,7 +2,7 @@ require('dotenv').config();
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import { loginRouter, registerRouter } from './routes/auth';
+import authRoutes from './routes/auth';
 import petRoutes from './routes/pets';
 import contactRouter from './routes/contact';
 import favoriteRouter from './routes/favorite';
@@ -173,10 +173,7 @@ app.use(cors());
 
 // MongoDB connection and mock data insertion
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGODB_URI)
   .then(async () => {
     console.log('Connected to MongoDB');
 
@@ -194,8 +191,7 @@ mongoose
   });
 
 //routes
-app.use('/login', loginRouter);
-app.use('/register', loginRouter);
+app.use('/auth', authRoutes);
 app.use('/pets', petRoutes);
 app.use('/contact', contactRouter);
 app.use('/dashboard', dashboardRouter);

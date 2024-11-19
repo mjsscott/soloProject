@@ -1,15 +1,16 @@
-import { Response } from "express";
-import { FavoriteRequest } from "../@types/PetType";
+import { Response, Request } from "express";
+import {  PetType } from "../@types/PetType";
 import petModel from "../models/pet-model";
 
 // Toggle favorite status of a pet
-exports.toggleFavoriteStatus = async (req: FavoriteRequest, res: Response) => {
+export async function toggleFavoriteStatus (req: Request, res: Response): Promise<void> {
   const { id: petId } = req.params;
 
   try {
     const pet = await petModel.findById(petId);
 
-    if (!pet) return res.status(404).json({ error: "Pet not found" });
+    if (!pet) {res.status(404).json({ error: "Pet not found" });
+    return;}
 
     pet.favorite = !pet.favorite; // Toggle favorite status
     await pet.save();
@@ -24,7 +25,7 @@ exports.toggleFavoriteStatus = async (req: FavoriteRequest, res: Response) => {
 };
 
 // Get user's favorite pets
-exports.getAllFavorites = async (req: Request, res: Response) => {
+export async function getAllFavorites (req: Request, res: Response): Promise<void> {
   try {
     const favoritePets = await petModel.find({ favorite: true });
     res.status(200).json(favoritePets);
