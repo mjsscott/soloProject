@@ -1,6 +1,6 @@
 const express = require('express');
 const { getAllPets, addPet, editPet, deletePet, getAllMessages } = require('../controllers/adminController');
-const authMiddleware = require('../middleware/authMiddleware');
+const authMiddleware = require('../build/middleware/authMiddleware');
 
 const router = express.Router();
 // Pet routes
@@ -13,4 +13,4 @@ router.delete('/pets/:id', authMiddleware, deletePet);
 // Message routes
 router.get('/messages', authMiddleware, getAllMessages);
 
-module.exports = router; 
+module.exports = router;

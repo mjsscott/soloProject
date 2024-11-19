@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,10 +8,14 @@ import { FaPhone, FaEdit, FaHeart } from "react-icons/fa";
 import { BiSolidHomeHeart } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdEmail, MdDelete } from "react-icons/md";
+import React from 'react';
+import { Pet } from "../../types/Pet.js";
+import { PetDetailPageProps } from "../../types/Components";
 
-const PetDetailPage = () => {
+
+const PetDetailPage: React.FC<PetDetailPageProps> = () => {
   const { id } = useParams();
-  const [pet, setPet] = useState(null);
+  const [pet, setPet] = useState<Pet | null>(null);
   const [cityName, setCityName] = useState(""); // State to store the city name
   const [isFavorite, setIsFavorite] = useState(false); // State to manage favorite status
   const navigate = useNavigate();
@@ -20,14 +25,17 @@ const PetDetailPage = () => {
   // Fetch pet details and reverse geocode city name on component mount
   useEffect(() => {
     const fetchPet = async () => {
+      const base_url = 'http://localhost:3000';
       try {
-        const response = await axios.get(`http://localhost:3000/pets/${id}`);
-        setPet(response.data);
 
-        // Check if location coordinates are available
-        const { lat, lng } = response.data.location;
+        const response = await axios.get(`${base_url}/pets/${id}`);
+        const fetchedPet: Pet = response.data;
+        setPet(fetchedPet);
+
+        const { lat, lng } = fetchedPet.location;
         if (lat && lng) {
           const geocodeResponse = await axios.get(
+
             "https://nominatim.openstreetmap.org/reverse",
             {
               params: {
@@ -38,22 +46,23 @@ const PetDetailPage = () => {
             }
           );
           setCityName(
-            geocodeResponse.data.address.city || "Location not available"
+            geocodeResponse.data.address.city.length > 0 ? geocodeResponse.data.address.city : "Location not available"
           ); // Set the city name
         }
 
         // Fetch user's favorite pets to check if this pet is a favorite
         const favoritesResponse = await axios.get(
-          `http://localhost:3000/favorite`,
+          `${base_url}/favorite`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         setIsFavorite(
-          favoritesResponse.data.some((favPet) => favPet._id === id)
+          favoritesResponse.data.some((favPet: Pet) => favPet._id === id)
         );
       } catch (error) {
-        console.error("Error fetching pet details:", error);
+
+        console.error("Error fetching your pet details:", error);
       }
     };
     fetchPet();
@@ -77,7 +86,6 @@ const PetDetailPage = () => {
 
   // Loading message while data is being fetched
   if (!pet) return <p>Loading...</p>;
-
   // Handler for deleting a pet
   const handleDelete = async () => {
     console.log("Deleting pet with id:", id); // Log the id for debugging
@@ -112,23 +120,23 @@ const PetDetailPage = () => {
         )}
 
         {/* Pet details */}
-        <h2 id="name">{pet.name}</h2>
-        <p>Age: {pet.age}</p>
-        <p>Gender: {pet.gender}</p>
+        <h2 data-testid='petname' id="name">{pet.name}</h2>
+        <p data-testid='petage'>Age: {pet.age}</p>
+        <p data-testid='petgender'>Gender: {pet.gender}</p>
 
         <h4>Shelter Details</h4>
         {/* Display city name from reverse geocoding */}
         <p>
           <FaLocationDot style={{ color: "black", marginRight: "8px" }} />
-          {cityName}
+          <span data-testid='petcity'>{cityName || 'Location not available'}</span>
         </p>
         <p>
           <BiSolidHomeHeart style={{ color: "black", marginRight: "8px" }} />
-          {pet.shelterName}
+          <span data-testid='petshelter'>{pet.shelterName}</span>
         </p>
         <p>
           <FaPhone style={{ color: "black", marginRight: "8px" }} />
-          {pet.phone}
+          <span data-testid='petphone'>{pet.phone}</span>
         </p>
         <p>
           <MdEmail style={{ color: "black", marginRight: "8px" }} />

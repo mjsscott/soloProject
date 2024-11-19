@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { register } from "../services/authService";
 import "../styles/RegisterPage.css";
 
@@ -10,12 +10,15 @@ const RegisterPage = () => {
   });
   const [message, setMessage] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
     try {
       await register(formData);
       setMessage("Registration successful! You can now log in.");
@@ -47,7 +50,7 @@ const RegisterPage = () => {
           />
         </div>
         <div className="form-group">
-          <select name="role" onChange={handleChange} required>
+          <select name="role" onSelect={handleSelect} required>
             <option value="adopter">Adopter</option>
             <option value="shelter">Shelter</option>
           </select>

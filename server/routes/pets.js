@@ -1,6 +1,6 @@
 const express = require('express');
 const { getAllPets, addPet,getOnePet } = require('../controllers/petController');
-const authMiddleware = require('../middleware/authMiddleware');
+const authMiddleware = require('../build/middleware/authMiddleware');
 
 const router = express.Router();
 

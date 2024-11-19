@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import PetCard from "../components/PetCard";
 import MapComponent from "../components/MapComponent";
 import "../styles/PetListPage.css";
+import { Pet } from "../../types/Pet";
 
 const PetListPage = () => {
   const [pets, setPets] = useState([]);
-  const [filters, setFilters] = useState({ type: "", location: "" });
+  const [filters, setFilters] = useState({ type: "", city: "", age: null });
 
   useEffect(() => {
     const fetchPets = async () => {
@@ -21,13 +22,13 @@ const PetListPage = () => {
     fetchPets();
   }, []);
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
 
   //Using the optional chaining operator (?.) ensures that pet.city is defined before calling toLowerCase().
   //If pet.city is undefined, it will safely return undefined, preventing the error.
-  const filteredPets = pets.filter((pet) => {
+  const filteredPets = pets.filter((pet: Pet) => {
     return (
       (filters.type
         ? pet.type?.toLowerCase() === filters.type.toLowerCase()
@@ -67,7 +68,7 @@ const PetListPage = () => {
       </div>
 
       <div className="pet-list">
-        {filteredPets.map((pet) => (
+        {filteredPets.map((pet: Pet) => (
           <div key={pet._id}>
             <PetCard key={pet._id} pet={pet} />
             <Link to={`/pets/${pet._id}`}></Link>
