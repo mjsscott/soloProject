@@ -188,7 +188,7 @@ mongoose
       console.log('Pets collection already populated');
     }
   })
-  .catch((error) => {
+  .catch((error: Error) => {
     console.error('Error connecting to MongoDB:', error.message);
   });
 

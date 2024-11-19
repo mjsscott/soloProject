@@ -26,7 +26,11 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password, role } = req.body;
         const user = new user_1.default({ email, password, role });
         yield user.save();
-        res.status(201).json({ message: 'User registered successfully' });
+        console.log('User object:', user);
+        res.status(201).jsonp({
+            message: 'User registered successfully',
+            user: { id: user._id, email: user.email, role: user.role }
+        });
     }
     catch (error) {
         const typedError = error;
