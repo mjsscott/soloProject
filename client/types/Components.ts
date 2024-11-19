@@ -11,3 +11,6 @@ export interface PetDetailPageProps {
 export interface MapComponentProps {
     pets: Pet[]; // The component receives an array of Pet objects
 }
+export interface FavsPetPageProps {
+    favorites: Pet[];
+}
