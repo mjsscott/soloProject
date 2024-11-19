@@ -1,15 +1,19 @@
 import jwt from "jsonwebtoken";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction,  } from "express";
+import { IUser } from "../models/user";
 
-const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+
+export const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ error: "Access denied, no token provided" });
+    res.status(401).json({ error: "Access denied, no token provided" });
+    return;
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as IUser;
     req.user = decoded;
     next();
   } catch (error) {
@@ -17,4 +21,3 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-module.exports = authMiddleware;

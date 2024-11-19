@@ -1,13 +1,14 @@
 require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const authRoutes = require('./build/routes/auth');
-const petRoutes = require('./routes/pets');
-const contactRoutes = require('./routes/contact');
-const dashboardRoutes = require('./routes/dashboard');
-const favoriteRoutes = require('./routes/favorite');
-const Pet = require('./models/Pet');
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import authRoutes from './routes/auth';
+import petRoutes from './routes/pets';
+import contactRouter from './routes/contact';
+import favoriteRouter from './routes/favorite';
+import Pet from './models/pet-model';
+import dashboardRouter from './routes/dashboard';
+
 
 const mockPets = [
   {
@@ -172,10 +173,7 @@ app.use(cors());
 
 // MongoDB connection and mock data insertion
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGODB_URI)
   .then(async () => {
     console.log('Connected to MongoDB');
 
@@ -188,16 +186,16 @@ mongoose
       console.log('Pets collection already populated');
     }
   })
-  .catch((error) => {
+  .catch((error: Error) => {
     console.error('Error connecting to MongoDB:', error.message);
   });
 
 //routes
 app.use('/auth', authRoutes);
 app.use('/pets', petRoutes);
-app.use('/contact', contactRoutes);
-app.use('/dashboard', dashboardRoutes);
-app.use('/favorite', favoriteRoutes);
+app.use('/contact', contactRouter);
+app.use('/dashboard', dashboardRouter);
+app.use('/favorite', favoriteRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
