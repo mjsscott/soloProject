@@ -2,6 +2,8 @@ import { login, register } from "../controllers/authController";
 import { Request, Response } from "express";
 import User from "../models/user";
 import { describe, test, expect, it } from "@jest/globals";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 jest.mock('../models/user');
 const MockUser = User as unknown as jest.Mock;
@@ -97,6 +99,31 @@ describe('Auth Controller - Register', () => {
       error: 'Unexpected server error',
     })
   })
-  
+
 });
+
+describe('Auth Controller - Login', () => {
+  let req: Partial<Request>;
+  let res: Partial<Response>;
+  let mockJson: jest.Mock;
+  let mockStatus: jest.Mock;
+
+  beforeEach(() => {
+    req = {
+      body: {
+        email: 'test@example.com',
+        password: 'password123',
+        role: 'adopter',
+      },
+    };
+    mockJson = jest.fn();
+    mockStatus = jest.fn().mockReturnThis();
+    res = {
+      status: mockStatus,
+      json: mockJson,
+      jsonp: mockJson,
+    };
+    jest.clearAllMocks();
+  });
+})
 
