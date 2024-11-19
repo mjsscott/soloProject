@@ -1,6 +1,6 @@
-const express = require('express');
-const { getAllPets, addPet, editPet, deletePet, getAllMessages } = require('../controllers/adminController');
-const authMiddleware = require('../build/middleware/authMiddleware');
+import express from 'express';
+import { getAllPets, addPet, editPet, deletePet, getAllMessages } from '../controllers/adminController';
+import { authMiddleware } from '../middleware/authMiddleware';
 
 const dashboardRouter = express.Router();
 // Pet routes

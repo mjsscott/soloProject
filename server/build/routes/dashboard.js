@@ -1,14 +1,17 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express = require('express');
-const { getAllPets, addPet, editPet, deletePet, getAllMessages } = require('../controllers/adminController');
-const authMiddleware = require('../build/middleware/authMiddleware');
-const dashboardRouter = express.Router();
+const express_1 = __importDefault(require("express"));
+const adminController_1 = require("../controllers/adminController");
+const authMiddleware_1 = require("../middleware/authMiddleware");
+const dashboardRouter = express_1.default.Router();
 // Pet routes
-dashboardRouter.get('/pets', authMiddleware, getAllPets);
-dashboardRouter.post('/list', authMiddleware, addPet);
-dashboardRouter.put('/pets/:id', authMiddleware, editPet);
-dashboardRouter.delete('/pets/:id', authMiddleware, deletePet);
+dashboardRouter.get('/pets', authMiddleware_1.authMiddleware, adminController_1.getAllPets);
+dashboardRouter.post('/list', authMiddleware_1.authMiddleware, adminController_1.addPet);
+dashboardRouter.put('/pets/:id', authMiddleware_1.authMiddleware, adminController_1.editPet);
+dashboardRouter.delete('/pets/:id', authMiddleware_1.authMiddleware, adminController_1.deletePet);
 // Message routes
-dashboardRouter.get('/messages', authMiddleware, getAllMessages);
+dashboardRouter.get('/messages', authMiddleware_1.authMiddleware, adminController_1.getAllMessages);
 exports.default = dashboardRouter;

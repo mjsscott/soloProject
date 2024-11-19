@@ -27,4 +27,5 @@ export interface FavoriteRequest extends Request {
     id: string;  // The petId in this case, assuming it will be a string
   };
   user?: IUser
+
 }
