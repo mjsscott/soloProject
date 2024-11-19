@@ -28,7 +28,7 @@ const FavoritePetsPage: React.FC<FavsPetPageProps> = () => {
   return (
     <div className="favorite-list">
       <h2 id="title">Favorite Pets</h2>
-      <div testid-data='petlist' className="pet-list">
+      <div data-testid='petlist' className="pet-list">
         {favorites.length > 0 ? favorites.map((pet: Pet) => (
           <div key={pet._id}>
             <PetCard key={pet._id} pet={pet} />

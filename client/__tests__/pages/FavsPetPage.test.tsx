@@ -22,12 +22,17 @@ describe('PetFavsPage', () => {
         mockedAxios.get.mockResolvedValueOnce({ status: 200, data: mockPets });
 
         render(< MemoryRouter>
-            <FavoritePetsPage favorites={mockPets} />
+            <FavoritePetsPage/>
         </MemoryRouter>);
+
 
 
         await waitFor(() => {
 
+           expect(screen.getByTestId('petlist')).toBeInTheDocument();
+            expect(screen.getByText('Buddy')).toBeInTheDocument();
+            const petLink = screen.getByRole('link', { name: /buddy/i });
+            expect(petLink).toHaveAttribute('href', '/pets/13421401');
 
 
 
@@ -38,23 +43,7 @@ describe('PetFavsPage', () => {
 
 
 
-    it('should handle a 404 error for pet data', async () => {
 
-        mockedAxios.get.mockRejectedValueOnce({
-            response: { status: 404, data: 'Not Found' },
-        });
-
-        render(< MemoryRouter>
-            <PetDetailPage pet={mockPet} />
-        </MemoryRouter>);
-
-
-        await waitFor(() => {
-            expect(screen.getByText('Loading...')).toBeInTheDocument();
-            expect(console.error).toHaveBeenCalledWith('Error fetching your pet details:', expect.any(Error));
-
-        });
-    });
 });
 
 
