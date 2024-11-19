@@ -1,5 +1,9 @@
 import "../styles/footer.css";
-const Footer = () => {
+
+//import logo from "../images/logo.png";
+const logo = require("../images/logo.png");
+
+const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <div className="footer-features">
@@ -28,7 +32,7 @@ const Footer = () => {
             <a href="https://www.google.com">Training</a>
           </li>
         </ul>
-        <img src="../images/logo.png" alt="logo" className="footerImg"></img>
+        <img src={logo} alt="logo" className="footerImg"></img>
       </div>
       <p>&copy; {new Date().getFullYear()} PetAdopt. All rights reserved.</p>
     </footer>
