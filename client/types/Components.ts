@@ -8,3 +8,6 @@ export interface MapProps {
 export interface PetDetailPageProps {
     pet: Pet;
 }
+export interface MapComponentProps {
+    pets: Pet[]; // The component receives an array of Pet objects
+}
