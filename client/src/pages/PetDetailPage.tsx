@@ -27,7 +27,7 @@ const PetDetailPage: React.FC<PetDetailPageProps> = () => {
     const fetchPet = async () => {
       const base_url = 'http://localhost:3000';
       try {
-      // todo adjust .env file, moving to root and move all urls into it.
+
         const response = await axios.get(`${base_url}/pets/${id}`);
         const fetchedPet: Pet = response.data;
         setPet(fetchedPet);
@@ -46,7 +46,7 @@ const PetDetailPage: React.FC<PetDetailPageProps> = () => {
             }
           );
           setCityName(
-            geocodeResponse.data.address.city || "Location not available"
+            geocodeResponse.data.address.city.length > 0 ? geocodeResponse.data.address.city : "Location not available"
           ); // Set the city name
         }
 
@@ -61,6 +61,7 @@ const PetDetailPage: React.FC<PetDetailPageProps> = () => {
           favoritesResponse.data.some((favPet: Pet) => favPet._id === id)
         );
       } catch (error) {
+
         console.error("Error fetching your pet details:", error);
       }
     };
@@ -127,7 +128,7 @@ const PetDetailPage: React.FC<PetDetailPageProps> = () => {
         {/* Display city name from reverse geocoding */}
         <p>
           <FaLocationDot style={{ color: "black", marginRight: "8px" }} />
-          <span data-testid='petcity'>{cityName}</span>
+          <span data-testid='petcity'>{cityName || 'Location not available'}</span>
         </p>
         <p>
           <BiSolidHomeHeart style={{ color: "black", marginRight: "8px" }} />
