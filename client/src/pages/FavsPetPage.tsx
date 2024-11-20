@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import PetCard from "../components/PetCard";
 import "../styles/FavsPetPage.css";
 import { Pet } from "../../types/Pet";
-import { FavsPetPageProps } from "../../types/Components";
+interface FavsPetPageProps {
+
+}
 
 const FavoritePetsPage: React.FC<FavsPetPageProps> = () => {
   const [favorites, setFavorites] = useState([]);

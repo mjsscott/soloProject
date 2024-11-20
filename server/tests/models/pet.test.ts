@@ -1,8 +1,46 @@
 import mongoose from "mongoose";
 import petModel from "../../models/pet";
-import { PetType } from "../../@types/PetType";
-import { mockPets } from "./mockPets";
+import { PetType } from "../../@types/Pet";
 require('dotenv').config();
+
+const generate24CharId = (): string => {
+    return crypto.randomUUID().replace(/-/g, '').substring(0, 24);
+};
+const mockPets = [
+    {
+        _id: generate24CharId(),
+        name: 'Buddy',
+        type: 'Dog',
+        age: 3,
+        location: { lat: 51.5074, lng: -0.1278 },
+        city: 'London',
+        shelterName: 'Together',
+        phone: '123456789',
+        email: 'together@gmail.com',
+        image: '/images/buddy.jpg',
+        gender: 'Male',
+        breed: 'Labrador Retriever',
+        favorite: false,
+        available: true,
+        description: 'Buddy is an energetic and friendly Labrador who loves playing fetch and is great with kids!',
+    },
+    {
+        _id: '13421402',
+        name: 'Luci',
+        type: 'Cat',
+        age: 3,
+        location: { lat: 51.5074, lng: -0.1278 },
+        city: 'London',
+        shelterName: 'Together',
+        phone: '123456789',
+        email: 'together@gmail.com',
+        image: '/images/luci.jpg',
+        gender: 'Female',
+        breed: 'Siamese',
+        favorite: false,
+        available: true,
+        description: 'Luci is a calm and affectionate Siamese cat who enjoys lounging in sunny spots and loves human company.',
+    }];
 
 describe("Pet Model Tests", () => {
     beforeAll(async () => {

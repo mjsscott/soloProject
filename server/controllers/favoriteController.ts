@@ -1,5 +1,4 @@
 import { Response, Request } from "express";
-import {  PetType } from "../@types/PetType";
 import petModel from "../models/pet";
 
 // Toggle favorite status of a pet

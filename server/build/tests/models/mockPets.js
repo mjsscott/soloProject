@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mockPets = void 0;
+const nanoid_1 = require("nanoid");
+const id = (0, nanoid_1.nanoid)(24);
 exports.mockPets = [
     {
-        _id: '13421401',
+        _id: id,
         name: 'Buddy',
         type: 'Dog',
         age: 3,

@@ -1,6 +1,6 @@
 import petModel from "../models/pet";
 import { Request, Response } from "express";
-import { PetType } from "../@types/PetType";
+import { PetType } from "../@types/Pet";
 
 // Get all pets
 export async function getAllPets (req: Request, res: Response): Promise<void> {
