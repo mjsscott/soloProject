@@ -1,9 +1,12 @@
 import Message from '../models/message';
-import { MessageRequest, MessageType } from '../@types/MessageType';
-import { Response } from 'express';
+import { MessageType } from '../@types/Message';
+import { Response, Request } from 'express';
 
 
 
+export interface MessageRequest extends Request {
+    body: MessageType
+}
 
 export async function submitContactForm (req: MessageRequest, res: Response) {
 const myMessage = req.body;

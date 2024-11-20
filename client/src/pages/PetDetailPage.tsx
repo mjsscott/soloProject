@@ -10,9 +10,11 @@ import { FaLocationDot } from "react-icons/fa6";
 import { MdEmail, MdDelete } from "react-icons/md";
 import React from 'react';
 import { Pet } from "../../types/Pet.js";
-import { PetDetailPageProps } from "../../types/Components";
 
 
+export interface PetDetailPageProps {
+  pet: Pet;
+}
 const PetDetailPage: React.FC<PetDetailPageProps> = () => {
   const { id } = useParams();
   const [pet, setPet] = useState<Pet | null>(null);

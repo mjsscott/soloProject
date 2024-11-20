@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { MessageType } from '../@types/MessageType';
+import { MessageType } from '../@types/Message';
 
 const messageSchema = new mongoose.Schema({
     name: {

@@ -1,7 +1,11 @@
 import "../styles/PetCard.css";
 import { Link } from "react-router-dom";
-import { PetCardProps } from "../../types/Components";
+import { Pet } from "../../types/Pet";
 import React from "react";
+
+export interface PetCardProps {
+  pet: Pet;
+}
 const PetCard: React.FC<PetCardProps> = ({ pet }) => {
   return (
     <div className="pet-card">

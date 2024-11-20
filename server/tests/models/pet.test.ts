@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import petModel from "../../models/pet";
-import { PetType } from "../../@types/PetType";
+import { PetType } from "../../@types/Pet";
 import { mockPets } from "./mockPets";
 require('dotenv').config();
 
