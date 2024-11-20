@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/AdminMessages.css"; 
+import "../styles/AdminMessages.css";
+import { Message } from "../../types/Message";
 
 const AdminMessages = () => {
   const [messages, setMessages] = useState([]);
@@ -11,7 +12,7 @@ const AdminMessages = () => {
       try {
         const response = await axios.get("http://localhost:3000/dashboard/messages", {
           headers: {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
         });
         setMessages(response.data);
@@ -26,7 +27,7 @@ const AdminMessages = () => {
     <div className="admin-messages">
       <h3 className="title">Messages</h3>
       <ul className="messages-list">
-        {messages.map((msg) => (
+        {messages.map((msg: Message) => (
           <li key={msg._id} className="message-item">
             <p><strong>From:</strong> {msg.name}</p>
             <p><strong>Email:</strong> {msg.email}</p>

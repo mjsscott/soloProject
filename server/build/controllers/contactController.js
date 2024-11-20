@@ -13,12 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.submitContactForm = submitContactForm;
-const message_model_1 = __importDefault(require("../models/message-model"));
+const message_1 = __importDefault(require("../models/message"));
 function submitContactForm(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const myMessage = req.body;
         try {
-            const newMessage = new message_model_1.default(myMessage);
+            const newMessage = new message_1.default(myMessage);
             yield newMessage.save();
             res.json();
         }

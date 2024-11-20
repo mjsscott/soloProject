@@ -1,29 +1,9 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-require('dotenv').config();
-const express_1 = __importDefault(require("express"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const cors_1 = __importDefault(require("cors"));
-const auth_1 = __importDefault(require("./routes/auth"));
-const pets_1 = __importDefault(require("./routes/pets"));
-const contact_1 = __importDefault(require("./routes/contact"));
-const favorite_1 = __importDefault(require("./routes/favorite"));
-const pet_1 = __importDefault(require("./models/pet"));
-const dashboard_1 = __importDefault(require("./routes/dashboard"));
-const mockPets = [
+exports.mockPets = void 0;
+exports.mockPets = [
     {
+        _id: '13421401',
         name: 'Buddy',
         type: 'Dog',
         age: 3,
@@ -34,11 +14,15 @@ const mockPets = [
         email: 'together@gmail.com',
         image: '/images/buddy.jpg',
         gender: 'Male',
+        breed: 'Labrador Retriever',
         favorite: false,
+        available: true,
+        description: 'Buddy is an energetic and friendly Labrador who loves playing fetch and is great with kids!',
     },
     {
+        _id: '13421402',
         name: 'Luci',
-        type: 'cat',
+        type: 'Cat',
         age: 3,
         location: { lat: 51.5074, lng: -0.1278 },
         city: 'London',
@@ -47,9 +31,13 @@ const mockPets = [
         email: 'together@gmail.com',
         image: '/images/luci.jpg',
         gender: 'Female',
+        breed: 'Siamese',
         favorite: false,
+        available: true,
+        description: 'Luci is a calm and affectionate Siamese cat who enjoys lounging in sunny spots and loves human company.',
     },
     {
+        _id: '13421403',
         name: 'Tom',
         type: 'Cat',
         age: 1,
@@ -60,22 +48,30 @@ const mockPets = [
         email: 'adopt@gmail.com',
         image: '/images/tom.jpg',
         gender: 'Male',
+        breed: 'Maine Coon',
         favorite: false,
+        available: true,
+        description: 'Tom is a playful and curious Maine Coon cat, known for his large size and fluffy tail. He loves playing with toys and climbing high places.',
     },
     {
+        _id: '13421404',
         name: 'Fluffy',
         type: 'Rabbit',
         age: 1,
         location: { lat: 55.9533, lng: -3.1883 },
         city: 'Edinburgh',
-        sshelterName: 'Lives',
+        shelterName: 'Lives',
         phone: '123456789',
         email: 'lives@gmail.com',
         image: '/images/fluffy.jpg',
         gender: 'Male',
+        breed: 'Himalayan',
         favorite: false,
+        available: true,
+        description: 'Fluffy is a sweet and shy Himalayan rabbit. He loves being around quiet environments and enjoys chewing on fresh hay.',
     },
     {
+        _id: '13421405',
         name: 'Charlie',
         type: 'Dog',
         age: 5,
@@ -86,9 +82,13 @@ const mockPets = [
         email: 'bham@gemail.com',
         image: '/images/charlie.jpg',
         gender: 'Male',
+        breed: 'Beagle',
         favorite: false,
+        available: true,
+        description: 'Charlie is a friendly Beagle who loves to go on walks and sniff around. He is great with other dogs and enjoys attention from people.',
     },
     {
+        _id: '13421406',
         name: 'Bella',
         type: 'Cat',
         age: 2,
@@ -99,9 +99,13 @@ const mockPets = [
         email: 'your@gmail.com',
         image: '/images/bella.jpg',
         gender: 'Female',
+        breed: 'Persian',
         favorite: false,
+        available: true,
+        description: 'Bella is a loving and calm Persian cat, known for her long, soft fur. She enjoys quiet time and being pampered.',
     },
     {
+        _id: '13421407',
         name: 'Violla',
         type: 'Dog',
         age: 4,
@@ -112,9 +116,13 @@ const mockPets = [
         email: 'togetherliverpool@gmail.com',
         image: '/images/violla.jpg',
         gender: 'Female',
+        breed: 'German Shepherd',
         favorite: false,
+        available: true,
+        description: 'Violla is a brave and loyal German Shepherd, always eager to protect and serve. She’s active and loves to run around the yard.',
     },
     {
+        _id: '13421408',
         name: 'Shadow',
         type: 'Cat',
         age: 4,
@@ -125,9 +133,13 @@ const mockPets = [
         email: 'save@gmail.com',
         image: '/images/shadow.jpg',
         gender: 'Male',
+        breed: 'British Shorthair',
         favorite: false,
+        available: true,
+        description: 'Shadow is a quiet British Shorthair cat who enjoys being independent. He’s affectionate but likes his space and loves napping in cozy spots.',
     },
     {
+        _id: '13421409',
         name: 'Snowball',
         type: 'Rabbit',
         age: 2,
@@ -138,9 +150,13 @@ const mockPets = [
         email: 'home@gmail.com',
         image: '/images/snowball.jpg',
         gender: 'Female',
+        breed: 'Mini Rex',
         favorite: false,
+        available: true,
+        description: 'Snowball is a friendly and energetic Mini Rex rabbit who loves to hop around. She enjoys being handled and is good with children.',
     },
     {
+        _id: '13421410',
         name: 'Rocky',
         type: 'Dog',
         age: 5,
@@ -151,9 +167,13 @@ const mockPets = [
         email: 'homecambridge@gamil.com',
         image: '/images/rocky.jpg',
         gender: 'Male',
+        breed: 'Boxer',
         favorite: false,
+        available: true,
+        description: 'Rocky is an affectionate Boxer who loves playing and being active. He’s strong but gentle and gets along with other pets.',
     },
     {
+        _id: '13421411',
         name: 'Ginger',
         type: 'Cat',
         age: 3,
@@ -164,45 +184,9 @@ const mockPets = [
         email: 'shelter@gamil.com',
         image: '/images/ginger.jpg',
         gender: 'Female',
+        breed: 'Bengal',
         favorite: false,
+        available: true,
+        description: 'Ginger is a playful Bengal cat, known for her striking spots and stripes. She loves climbing and exploring new places.',
     },
 ];
-//middleware
-const app = (0, express_1.default)();
-app.use(express_1.default.json());
-app.use((0, cors_1.default)());
-/*
-  mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(async () => {
-        await mongoose.connection.db.dropCollection('pets');
-        console.log('Dropped pets collection');
-        mongoose.connection.close();
-    })
-    .catch(error => console.error('Error dropping collection:', error));
- */
-// MongoDB connection and mock data insertion
-mongoose_1.default
-    .connect(process.env.MONGODB_URI)
-    .then(() => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('Connected to MongoDB');
-    // Insert mock data if the collection is empty
-    const existingPets = yield pet_1.default.countDocuments();
-    if (existingPets === 0) {
-        yield pet_1.default.insertMany(mockPets);
-        console.log('Mock pets data inserted');
-    }
-    else {
-        console.log('Pets collection already populated');
-    }
-}))
-    .catch((error) => {
-    console.error('Error connecting to MongoDB:', error.message);
-});
-//routes
-app.use('/auth', auth_1.default);
-app.use('/pets', pets_1.default);
-app.use('/contact', contact_1.default);
-app.use('/dashboard', dashboard_1.default);
-app.use('/favorite', favorite_1.default);
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

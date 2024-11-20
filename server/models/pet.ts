@@ -22,7 +22,7 @@ const petSchema = new mongoose.Schema(
       lat: Number,
       lng: Number,
     },
-    city: String,
+    city: String || null,
     description: String,
     image: String, //file or url for pet's image
     available: {

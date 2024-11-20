@@ -15,12 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllPets = getAllPets;
 exports.addPet = addPet;
 exports.getOnePet = getOnePet;
-const pet_model_1 = __importDefault(require("../models/pet-model"));
+const pet_1 = __importDefault(require("../models/pet"));
 // Get all pets
 function getAllPets(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const pets = yield pet_model_1.default.find();
+            const pets = yield pet_1.default.find();
             res.json(pets);
         }
         catch (error) {
@@ -35,7 +35,7 @@ function addPet(req, res) {
         var _a;
         try {
             const thisShelter = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
-            const newPet = new pet_model_1.default(Object.assign(Object.assign({}, req.body), { shelter: thisShelter // Assuming shelter is logged in
+            const newPet = new pet_1.default(Object.assign(Object.assign({}, req.body), { shelter: thisShelter // Assuming shelter is logged in
              }));
             yield newPet.save();
             res.status(201).json(newPet);
@@ -50,7 +50,7 @@ function addPet(req, res) {
 function getOnePet(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const pet = yield pet_model_1.default.findById(req.params.id);
+            const pet = yield pet_1.default.findById(req.params.id);
             res.json(pet);
         }
         catch (error) {

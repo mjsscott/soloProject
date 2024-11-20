@@ -3,24 +3,47 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import PetCard from "../components/PetCard";
 import "../styles/AdminPetList.css";
+import { Pet } from "../../types/Pet";
+import { randomUUID } from "crypto";
+
+// added blank pet for setting state w/types.
+const blankPet = {
+  _id: randomUUID(),
+  breed: '',
+  favorite: false,
+  name: "",
+  type: "",
+  gender: "",
+  shelterName: "",
+  phone: "",
+  email: "",
+  age: 0,
+  location: {
+    lat: 0,
+    lng: 0,
+  },
+  image: "",
+  city: '',
+  description: '',
+  available: true
+}
 
 const AdminPetList = () => {
-  const [pets, setPets] = useState([]);
+  const [pets, setPets] = useState<Pet[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newPet, setNewPet] = useState({
-    name: "",
-    type: "",
-    gender: "",
-    shelterName: "",
-    phone: "",
-    email: "",
-    age: "",
-    location: "", // This will hold the city name initially
-    image: "",
-  });
-  const [imageFile, setImageFile] = useState(null); // State for the image file
+  const [newPet, setNewPet] = useState<Pet>(blankPet);
+  const [imageFile, setImageFile] = useState<File>();
   const token = localStorage.getItem("token");
   const userRole = localStorage.getItem("role");
+
+  interface File {
+    lastModified: number;
+    name: string;
+    size: number;
+    type: string;
+    arrayBuffer (): Promise<ArrayBuffer>;
+
+  }
 
   useEffect(() => {
     const fetchPets = async () => {
@@ -43,16 +66,23 @@ const AdminPetList = () => {
     setShowAddForm(true);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewPet({ ...newPet, [name]: value });
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (name && value) {
+
+      setNewPet({ ...newPet, [name]: value});
+    }
   };
 
-  const handleFileChange = (e) => {
-    setImageFile(e.target.files[0]);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files[0]) {
+      setImageFile(files[0]);
+    }
   };
 
-  const geocodeCity = async (cityName) => {
+
+  const geocodeCity = async (cityName: string) => {
     try {
       const response = await axios.get(
         "https://nominatim.openstreetmap.org/search",
@@ -76,12 +106,14 @@ const AdminPetList = () => {
     }
   };
 
-  const handleAddPetSubmit = async (e) => {
-    e.preventDefault();
+  const handleAddPetSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     try {
       const formData = new FormData();
-      formData.append("file", imageFile);
+      if (imageFile) {
+        formData.append("file", imageFile.toString());
+      }
       formData.append("upload_preset", "petAdopt");
 
       const cloudinaryRes = await axios.post(
@@ -92,7 +124,7 @@ const AdminPetList = () => {
       const imageUrl = cloudinaryRes.data.secure_url;
 
       // Geocode the city to get latitude and longitude
-      const { lat, lng } = await geocodeCity(newPet.location);
+      const { lat, lng } = await geocodeCity(newPet.location.toString());
       const newPetData = { ...newPet, location: { lat, lng }, image: imageUrl };
 
       const response = await axios.post(
@@ -105,18 +137,9 @@ const AdminPetList = () => {
 
       setPets([...pets, response.data]);
       setShowAddForm(false);
-      setNewPet({
-        name: "",
-        type: "",
-        gender: "",
-        shelterName: "",
-        phone: "",
-        email: "",
-        age: "",
-        location: "",
-        image: "",
-      });
-      setImageFile(null);
+
+      setNewPet(blankPet);
+      setImageFile(new File([], ''));
     } catch (error) {
       console.error("Error uploading pet:", error);
     }
@@ -190,7 +213,7 @@ const AdminPetList = () => {
             type="text"
             name="location"
             placeholder="City Name"
-            value={newPet.location}
+            value={newPet.city}
             onChange={handleInputChange}
             required
           />

@@ -1,4 +1,4 @@
-import Message from '../models/message-model';
+import Message from '../models/message';
 import { MessageRequest, MessageType } from '../@types/MessageType';
 import { Response } from 'express';
 

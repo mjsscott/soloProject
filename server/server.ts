@@ -6,7 +6,7 @@ import authRoutes from './routes/auth';
 import petRoutes from './routes/pets';
 import contactRouter from './routes/contact';
 import favoriteRouter from './routes/favorite';
-import Pet from './models/pet-model';
+import Pet from './models/pet';
 import dashboardRouter from './routes/dashboard';
 
 

@@ -1,6 +1,6 @@
 import { PetType } from "../@types/PetType";
-import messageModel from "../models/message-model";
-import petModel from "../models/pet-model";
+import messageModel from "../models/message";
+import petModel from "../models/pet";
 import { Response, Request } from "express";
 
 

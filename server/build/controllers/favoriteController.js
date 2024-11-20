@@ -14,13 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toggleFavoriteStatus = toggleFavoriteStatus;
 exports.getAllFavorites = getAllFavorites;
-const pet_model_1 = __importDefault(require("../models/pet-model"));
+const pet_1 = __importDefault(require("../models/pet"));
 // Toggle favorite status of a pet
 function toggleFavoriteStatus(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { id: petId } = req.params;
         try {
-            const pet = yield pet_model_1.default.findById(petId);
+            const pet = yield pet_1.default.findById(petId);
             if (!pet) {
                 res.status(404).json({ error: "Pet not found" });
                 return;
@@ -42,7 +42,7 @@ function toggleFavoriteStatus(req, res) {
 function getAllFavorites(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const favoritePets = yield pet_model_1.default.find({ favorite: true });
+            const favoritePets = yield pet_1.default.find({ favorite: true });
             res.status(200).json(favoritePets);
         }
         catch (error) {

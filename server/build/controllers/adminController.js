@@ -17,13 +17,13 @@ exports.addPet = addPet;
 exports.editPet = editPet;
 exports.deletePet = deletePet;
 exports.getAllMessages = getAllMessages;
-const message_model_1 = __importDefault(require("../models/message-model"));
-const pet_model_1 = __importDefault(require("../models/pet-model"));
+const message_1 = __importDefault(require("../models/message"));
+const pet_1 = __importDefault(require("../models/pet"));
 // Fetch all pets (for shelters to manage)
 function getAllPets(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const pets = yield pet_model_1.default.find();
+            const pets = yield pet_1.default.find();
             res.status(200).json(pets);
         }
         catch (error) {
@@ -37,7 +37,7 @@ function addPet(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const myPet = req.body;
         try {
-            const newPet = new pet_model_1.default({
+            const newPet = new pet_1.default({
                 name: myPet.name,
                 type: myPet.type,
                 age: myPet.age,
@@ -59,7 +59,7 @@ function editPet(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { id } = req.params;
         try {
-            const updatedPet = yield pet_model_1.default.findByIdAndUpdate(id, req.body, { new: true });
+            const updatedPet = yield pet_1.default.findByIdAndUpdate(id, req.body, { new: true });
             res.status(200).json(updatedPet);
         }
         catch (error) {
@@ -72,7 +72,7 @@ function deletePet(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { id } = req.params;
         try {
-            const deletedPet = yield pet_model_1.default.findByIdAndDelete(id);
+            const deletedPet = yield pet_1.default.findByIdAndDelete(id);
             if (!deletedPet) {
                 res.status(404).json({ message: "Pet not found" });
                 return;
@@ -89,7 +89,7 @@ function deletePet(req, res) {
 function getAllMessages(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const messages = yield message_model_1.default.find();
+            const messages = yield message_1.default.find();
             res.status(200).json(messages);
         }
         catch (error) {
