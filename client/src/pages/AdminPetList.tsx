@@ -4,29 +4,9 @@ import { Link } from "react-router-dom";
 import PetCard from "../components/PetCard";
 import "../styles/AdminPetList.css";
 import { Pet } from "../../types/Pet";
-import { randomUUID } from "crypto";
+import { blankPet } from "../../types/BlankPet";
 
-// added blank pet for setting state w/types.
-const blankPet = {
-  _id: randomUUID(),
-  breed: '',
-  favorite: false,
-  name: "",
-  type: "",
-  gender: "",
-  shelterName: "",
-  phone: "",
-  email: "",
-  age: 0,
-  location: {
-    lat: 0,
-    lng: 0,
-  },
-  image: "",
-  city: '',
-  description: '',
-  available: true
-}
+
 
 const AdminPetList = () => {
   const [pets, setPets] = useState<Pet[]>([]);

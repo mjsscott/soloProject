@@ -76,5 +76,6 @@ describe("Pet Model Tests", () => {
         pet.city = "Los Angeles";
         yield pet.save();
         const updatedPet = yield pet_1.default.findById(pet._id);
+        expect(updatedPet).toBeTruthy();
     }));
 });

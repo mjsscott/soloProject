@@ -83,6 +83,7 @@ describe("Pet Model Tests", () => {
         await pet.save();
 
         const updatedPet: PetType | null = await petModel.findById(pet._id);
+        expect(updatedPet).toBeTruthy()
 
     });
 });

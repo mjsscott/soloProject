@@ -2,17 +2,23 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/AdminEditPage.css";
+import { blankPet } from "../../types/BlankPet";
+
+interface File {
+  lastModified: number;
+  name: string;
+  size: number;
+  type: string;
+  arrayBuffer (): Promise<ArrayBuffer>;
+
+}
 
 const AdminEditPage = () => {
   const { id } = useParams(); // Ensure `id` is obtained correctly
-  const [pet, setPet] = useState({
-    name: "",
-    age: "",
-    image: "",
-  });
+  const [pet, setPet] = useState(blankPet);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  const [imageFile, setImageFile] = useState(null); // State for the image file
+  const [imageFile, setImageFile] = useState<File>();
   const userRole = localStorage.getItem("role");
 
   useEffect(() => {
@@ -30,17 +36,20 @@ const AdminEditPage = () => {
     fetchPet();
   }, [id]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
     setPet({ ...pet, [name]: value });
   };
 
-  const handleFileChange = (e) => {
-    setImageFile(e.target.files[0]);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files[0]) {
+      setImageFile(files[0]);
+    }
   };
 
-  const handleEditSubmit = async (e) => {
-    e.preventDefault();
+  const handleEditSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     try {
       const updatedPet = { ...pet };
@@ -48,7 +57,7 @@ const AdminEditPage = () => {
       if (imageFile) {
         // Upload image file here and get the URL
         const formData = new FormData();
-        formData.append("file", imageFile);
+        formData.append("file", imageFile.toString());
         formData.append("upload_preset", "petAdopt");
 
         const uploadResponse = await axios.post(
