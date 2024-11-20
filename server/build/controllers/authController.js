@@ -24,9 +24,11 @@ const jwtSecret = process.env.JWT_SECRET;
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password, role } = req.body;
+        if (!email || !password || !role) {
+            throw new Error('email, password and role are expected fields');
+        }
         const user = new user_1.default({ email, password, role });
         yield user.save();
-        console.log('User object:', user);
         res.status(201).jsonp({
             message: 'User registered successfully',
             user: { id: user._id, email: user.email, role: user.role }
@@ -42,6 +44,10 @@ exports.register = register;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
+        if (!email || !password) {
+            res.status(400).json({ error: 'Email and password are required' });
+            return;
+        }
         const user = yield user_1.default.findOne({ email });
         if (!user) {
             res.status(401).json({ error: 'Invalid credentials' });
@@ -51,14 +57,18 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!isMatch) {
             res.status(401).json({ error: 'Invalid credentials' });
         }
+        console.log('JWT_SECRET in function:', process.env.JWT_SECRET);
         // Generate JWT token
-        if (!jwtSecret) {
-            throw new Error('JWT_SECRET is not defined in environment variables');
+        if (typeof process.env.JWT_SECRET === undefined) {
+            console.log("BONGOHORSE");
+            res.status(500).json({ error: 'JWT_SECRET is not defined in environment variables' });
+            return;
         }
         const token = jsonwebtoken_1.default.sign({ id: user._id, role: user.role }, jwtSecret, { expiresIn: '1d' });
-        res.json({ token, role: user.role });
+        res.status(200).json({ token, role: user.role });
     }
     catch (error) {
+        console.error('Error during login:', error);
         res.status(500).json({ error: 'Server error' });
     }
 });

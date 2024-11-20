@@ -14,8 +14,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const pet_1 = __importDefault(require("../../models/pet"));
-const mockPets_1 = require("./mockPets");
 require('dotenv').config();
+const generate24CharId = () => {
+    return crypto.randomUUID().replace(/-/g, '').substring(0, 24);
+};
+const mockPets = [
+    {
+        _id: generate24CharId(),
+        name: 'Buddy',
+        type: 'Dog',
+        age: 3,
+        location: { lat: 51.5074, lng: -0.1278 },
+        city: 'London',
+        shelterName: 'Together',
+        phone: '123456789',
+        email: 'together@gmail.com',
+        image: '/images/buddy.jpg',
+        gender: 'Male',
+        breed: 'Labrador Retriever',
+        favorite: false,
+        available: true,
+        description: 'Buddy is an energetic and friendly Labrador who loves playing fetch and is great with kids!',
+    },
+    {
+        _id: '13421402',
+        name: 'Luci',
+        type: 'Cat',
+        age: 3,
+        location: { lat: 51.5074, lng: -0.1278 },
+        city: 'London',
+        shelterName: 'Together',
+        phone: '123456789',
+        email: 'together@gmail.com',
+        image: '/images/luci.jpg',
+        gender: 'Female',
+        breed: 'Siamese',
+        favorite: false,
+        available: true,
+        description: 'Luci is a calm and affectionate Siamese cat who enjoys lounging in sunny spots and loves human company.',
+    }
+];
 describe("Pet Model Tests", () => {
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         // Connect to an in-memory MongoDB instance or your test DB before tests run
@@ -27,7 +65,7 @@ describe("Pet Model Tests", () => {
         yield mongoose_1.default.connection.close();
     }));
     it("should create a new pet without specifying _id", () => __awaiter(void 0, void 0, void 0, function* () {
-        const petData = mockPets_1.mockPets[1];
+        const petData = mockPets[1];
         const pet = new pet_1.default(petData);
         yield pet.save();
         expect(pet._id).toBeDefined();
