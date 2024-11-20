@@ -30,7 +30,7 @@ export async function addPet (req: Request, res: Response): Promise<void> {
 //Get one Pet for details
 export async function getOnePet (req: Request, res: Response): Promise<void> {
   try {
-    const pet: PetType = await petModel.findById(req.params.id);
+    const pet: PetType | null = await petModel.findById(req.params.id);
     res.json(pet);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch pet details" });
