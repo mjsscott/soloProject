@@ -1,18 +1,19 @@
 export default {
-  testEnvironment: 'jsdom',
+  testEnvironment: "jsdom",
   transform: {
-    '^.+\\.(ts|tsx)?$': [
-      'ts-jest',
+    "^.+\\.(ts|tsx)?$": [
+      "ts-jest",
       {
-        tsconfig: './tsconfig.json',
+        tsconfig: "./tsconfig.json",
       },
     ],
-    '^.+\\.(js|jsx)$': 'babel-jest',
+    "^.+\\.(js|jsx)$": "babel-jest",
   },
 
   moduleNameMapper: {
-    '\\.css$': 'identity-obj-proxy',
+    "\\.css$": "identity-obj-proxy",
+    "\\.(png|jpg|jpeg|gif|svg)$": "<rootDir>/__mocks__/fileMock.ts", // Remove "client/"
   },
-  preset: 'ts-jest',
-
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  preset: "ts-jest",
 };
