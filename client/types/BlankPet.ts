@@ -1,8 +1,10 @@
-import { randomUUID } from "crypto";
+import { nanoid } from "nanoid"
+
+const id = nanoid(24);
 
 // added blank pet for setting state w/types.
 export const blankPet = {
-    _id: randomUUID(),
+    _id: id,
     breed: '',
     favorite: false,
     name: "",

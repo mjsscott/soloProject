@@ -10,15 +10,15 @@ const ContactPage = () => {
   });
   const [status, setStatus] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     try {
       await axios.post("http://localhost:3000/contact", formData);
       setStatus("Message sent successfully!");
