@@ -2,13 +2,15 @@
 import "leaflet/dist/leaflet.css";
 import { Link } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
+import L  from "leaflet";
 //import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
-const markerIcon2x = require("leaflet/dist/images/marker-icon-2x.png");
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 //import markerIcon from "leaflet/dist/images/marker-icon.png";
-const markerIcon = require("leaflet/dist/images/marker-icon.png");
+import markerIcon from "leaflet/dist/images/marker-icon.png";
 //import markerShadow from "leaflet/dist/images/marker-shadow.png";
-const markerShadow = require("leaflet/dist/images/marker-shadow.png");
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+
 
 // Fix for default marker icons
 L.Icon.Default.mergeOptions({

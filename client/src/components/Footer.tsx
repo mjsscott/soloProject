@@ -1,7 +1,7 @@
 import "../styles/footer.css";
 
-//import logo from "../images/logo.png";
-const logo = require("../images/logo.png");
+
+import logo from '../assets/logo.png'
 
 const Footer: React.FC = () => {
   return (

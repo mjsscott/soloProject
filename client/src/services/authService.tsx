@@ -7,14 +7,12 @@ const API_URL = "http://localhost:3000/auth";
 export interface UserData {
   email: string;
   password: string;
-  [key: string]: any; // Allows additional properties if needed
 }
 
 // Define the structure of the API responses
 export interface AuthResponse {
   token?: string; // Token may not always be present (e.g., on error)
   message?: string; // Optional message field for responses
-  [key: string]: any; // Allows additional properties
 }
 
 // Register a new user

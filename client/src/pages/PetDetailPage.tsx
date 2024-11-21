@@ -8,6 +8,8 @@ import { FaLocationDot } from "react-icons/fa6";
 import { MdEmail, MdDelete } from "react-icons/md";
 import { Pet } from "../../types/Pet";
 
+
+
 const PetDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [pet, setPet] = useState<Pet | null>(null);
