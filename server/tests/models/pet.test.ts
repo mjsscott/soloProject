@@ -1,14 +1,12 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import petModel from "../../models/pet";
 import { PetType } from "../../@types/Pet";
 require('dotenv').config();
 
-const generate24CharId = (): string => {
-    return crypto.randomUUID().replace(/-/g, '').substring(0, 24);
-};
+
 const mockPets = [
     {
-        _id: generate24CharId(),
+        _id: new Types.ObjectId(),
         name: 'Buddy',
         type: 'Dog',
         age: 3,
@@ -25,7 +23,7 @@ const mockPets = [
         description: 'Buddy is an energetic and friendly Labrador who loves playing fetch and is great with kids!',
     },
     {
-        _id: '13421402',
+        _id: new Types.ObjectId(),
         name: 'Luci',
         type: 'Cat',
         age: 3,
@@ -55,19 +53,19 @@ describe("Pet Model Tests", () => {
     });
 
     it("should create a new pet without specifying _id", async () => {
-        const petData = mockPets[1];
+        const petData = mockPets[0];
 
         const pet = new petModel(petData);
         await pet.save();
 
 
         expect(pet._id).toBeDefined();
-        expect(pet.name).toBe("Rex");
+        expect(pet.name).toBe("Buddy");
         expect(pet.type).toBe("Dog");
-        expect(pet.breed).toBe("Bulldog");
+        expect(pet.breed).toBe("Labrador Retriever");
         expect(pet.age).toBe(3);
         expect(pet.gender).toBe("Male");
-        expect(pet.city).toBe("New York");
+        expect(pet.city).toBe("London");
         expect(pet.favorite).toBe(false);
         expect(pet.available).toBe(true);
 

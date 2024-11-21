@@ -1,5 +1,3 @@
-import { IUser } from "../models/user";
-
 export interface PetType  {
 _id: string;
 name: string;
